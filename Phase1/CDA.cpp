@@ -56,11 +56,11 @@ CDA<elmtype> :: CDA(int s) {
 template <class elmtype>
 CDA<elmtype> :: ~CDA() {
      delete array;
-     capacity = NULL;
-     front = NULL;
-     end = NULL;
-     length = NULL;
-     order = NULL;
+     capacity = 0;
+     front = 0;
+     end = 0;
+     length = 0;
+     order = false;
 }
 
 template <class elmtype>
