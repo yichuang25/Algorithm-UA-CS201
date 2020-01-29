@@ -60,14 +60,17 @@ int main () {
     b.Printarray();
 
     b.SetOrdered();
-    cout << b.Ordered() << endl;
+    cout << "Order: " << b.Ordered() << endl;
+    cout << "Selected: "<< b.Select(0) << "\n";
+    b.Printarray();
 
     b.InsertionSort();
-    b.Printarray();
     b.SetOrdered();
-    cout << b.Ordered() << endl;
+    cout << "Order: " << b.Ordered() << endl;
+    b.Printarray();
 
 
+/*
     b.DelFront();
     b.Printarray();
 
@@ -97,6 +100,6 @@ int main () {
 
     b.DelFront();
     b.Printarray();
-
+*/
     return 0;
 }
