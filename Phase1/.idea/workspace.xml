@@ -21,6 +21,14 @@
     <option name="SHOW_CLOSE_PROMPT" value="true" />
     <option name="TOOL_WINDOW_SELECTED_CONTENT_INDEX" value="0" />
     <option name="FILTER_BY_CURRENT_PROJECT" value="true" />
+    <treeState key="project">
+      <selectedPath>
+        <pathElement>
+          <option name="myNodeId" value="helperText" />
+          <option name="myNodeType" value="jetbrains.buildServer.tree.descriptors.LinkedTextDescriptor" />
+        </pathElement>
+      </selectedPath>
+    </treeState>
   </component>
   <component name="CMakeRunConfigurationManager" shouldGenerate="true" shouldDeleteObsolete="true">
     <generated />
@@ -31,7 +39,11 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4bbb8d9a-8613-44af-96c1-db74e0c9f050" name="Default Changelist" comment="" />
+    <list default="true" id="4bbb8d9a-8613-44af-96c1-db74e0c9f050" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/CDA.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/CDA.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/S20 Phase 1 Update.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/S20 Phase 1 Update.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/makefile" beforeDir="false" afterPath="$PROJECT_DIR$/makefile" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -40,7 +52,11 @@
   <component name="ClangdSettings">
     <option name="formatViaClangd" value="false" />
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
   <component name="ProjectId" id="1Wl0M5EiNTir8H7te0N86oXY9cb" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showExcludedFiles" value="true" />
@@ -65,6 +81,7 @@
       <option name="presentableId" value="Default" />
       <updated>1579708822452</updated>
       <workItem from="1579708825075" duration="121000" />
+      <workItem from="1580398534333" duration="45000" />
     </task>
     <servers />
   </component>
@@ -80,9 +97,10 @@
       <screen x="0" y="23" width="2560" height="1417" />
     </state>
     <state x="789" y="370" key="SettingsEditor/0.23.2560.1417@0.23.2560.1417" timestamp="1579708914882" />
-    <state x="959" y="563" key="com.intellij.ide.util.TipDialog" timestamp="1579708833451">
-      <screen x="0" y="23" width="2560" height="1417" />
+    <state x="539" y="357" key="com.intellij.ide.util.TipDialog" timestamp="1580398537939">
+      <screen x="0" y="23" width="1440" height="877" />
     </state>
+    <state x="539" y="357" key="com.intellij.ide.util.TipDialog/0.23.1440.877@0.23.1440.877" timestamp="1580398537939" />
     <state x="959" y="563" key="com.intellij.ide.util.TipDialog/0.23.2560.1417@0.23.2560.1417" timestamp="1579708833451" />
   </component>
 </project>

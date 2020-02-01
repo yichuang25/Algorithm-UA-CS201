@@ -69,7 +69,11 @@ int main () {
     cout << "Order: " << b.Ordered() << endl;
     b.Printarray();
 
+    b.AddEnd(5);
+    b.Printarray();
 
+    b.QuickSort();
+    b.Printarray();
 /*
     b.DelFront();
     b.Printarray();

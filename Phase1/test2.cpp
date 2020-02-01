@@ -30,16 +30,15 @@ int main(){
 	C.AddFront(-100.0); C.AddFront(-200.0);
 	for (int i=0; i< C.Length();i++) cout << C[i] << " ";  cout << endl;
 	// C => "-200 -100 1 2 3 4 5 6 7 8"
-    C.Printarray();
-    cout << "Select is " << C.Select(0) << endl;
+
 
 	CDA<int> A;
 	for(int i=0; i<10;i++) A.AddEnd(i);
 	cout << "SetOrdered is " << A.SetOrdered() << endl;
 	// A => "0 1 2 3 4 5 6 7 8 9" SetOrdered => 1
 	cout << "Select is " << A.Select(3) << endl;
-/*	// A => "0 1 2 3 4 5 6 7 8 9" Select => 2
-	cout << "Select is " << A.Search(5) << endl;
+	// A => "0 1 2 3 4 5 6 7 8 9" Select => 2
+	cout << "Search is " << A.Search(5) << endl;
 	// A => "0 1 2 3 4 5 6 7 8 9" Search => 6
 	A.AddFront(10); 
 	// A => "10 0 1 2 3 4 5 6 7 8 9"
@@ -47,7 +46,7 @@ int main(){
 	// A => "10 0 1 2 3 4 5 6 7 8 9" SetOrdered => -1
 	cout << "Select is " << A.Select(3) << endl;
 	// A => "10 0 1 2 3 4 5 6 7 8 9" Select => 2
-	cout << "Select is " << A.Search(5) << endl;
+	cout << "Search is " << A.Search(5) << endl;
 	// A => "10 0 1 2 3 4 5 6 7 8 9" Search => 6
 	A.InsertionSort();
 	// A => "0 1 2 3 4 5 6 7 8 9 10"
@@ -57,17 +56,23 @@ int main(){
 	// A => "0 1 2 3 4 5 6 7 8 9 10 -1"
 	cout << "Ordered is " << A.Ordered() << endl;
 	// A => "0 1 2 3 4 5 6 7 8 9 10 -1" Ordered => False
+	for (int i=0; i< A.Length();i++) cout << A[i] << " ";  cout << endl;
+
 	A.QuickSort();
+	for (int i=0; i< A.Length();i++) cout << A[i] << " ";  cout << endl;
+	/*
 	// A => "-1 0 1 2 3 4 5 6 7 8 9 10"
 	cout << "Ordered is " << A.Ordered() << endl;
 	// A => "-1 0 1 2 3 4 5 6 7 8 9 10" Ordered => True
-	A.DelFront(); A.DelFront(); A.AddEnd(5);
+	A.DelFront(); A.DelFront(); A.AddEnd(1);
 	// A => "1 2 3 4 5 6 7 8 9 10 1"
 	A.CountingSort(10);
 	// A => "1 1 2 3 4 5 6 7 8 9 10"
 	for (int i=0; i< A.Length();i++) cout << A[i] << " ";  cout << endl;
 
 	foo(A);
-	cout << "Ordered is " << A.Ordered() << endl;*/
+	cout << "Ordered is " << A.Ordered() << endl;
+	A.Printarray();
 	// A => "1 1 2 3 4 5 6 7 8 9 10" Ordered => True
+	*/
 }

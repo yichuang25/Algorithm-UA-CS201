@@ -27,7 +27,7 @@ public:
     void DelFront();
     int Length();
     int Capacity();
-    int Clear();
+    void Clear();
     bool Ordered();
     int SetOrdered();
     void QuickSort();
@@ -87,7 +87,7 @@ CDA<elmtype> :: CDA(const CDA &src){
 template <class elmtype>
 CDA<elmtype>& CDA<elmtype> :: operator=(const CDA<elmtype> &src) {
     cout << "In copy assignment operator\n";
-    if (this != src) {
+    if (this != &src) {
         capacity = src.capacity;
         end = src.end;
         length = src.length;
@@ -98,7 +98,7 @@ CDA<elmtype>& CDA<elmtype> :: operator=(const CDA<elmtype> &src) {
         }
     }
     return *this;
-} 
+}
 
 template <class elmtype>
 elmtype& CDA<elmtype> :: operator[](int i) {
@@ -107,9 +107,7 @@ elmtype& CDA<elmtype> :: operator[](int i) {
         exit(0);
     }
     if(i>=length) {
-        cout << "Out of bound\n";
-        int index = (front + i)%capacity;
-        return array[index];
+        exit(0);
     }
     return array[(front + i)%capacity];
 
@@ -131,6 +129,7 @@ void CDA<elmtype> :: Printarray() {
 
 template <class elmtype>
 void CDA<elmtype> :: AddEnd(elmtype v) {
+
     if (length == capacity){ // Out of space
         capacity = 2 * capacity;
         //cout << "Doubling to: " << capacity << endl;
@@ -147,11 +146,19 @@ void CDA<elmtype> :: AddEnd(elmtype v) {
         front = 0;
         end = length-1;
     }
+
     if (length == 0) { //no element
         array[front] = v;
         length++;
+        order = true;
     }
     else {
+        if(array[end] > v){
+            order = false;
+        }
+        else {
+            order = true;
+        }
         array[(end + 1)%capacity] = v;
         end = (end+1)%capacity;
         length++;
@@ -178,11 +185,20 @@ void CDA<elmtype> :: AddFront(elmtype v) {
         front = 0;
         end = length-1;
     }
+
     if (length == 0) { //no element
         array[front] = v;
         length++;
+        order = true;
     }
     else {
+        if(array[front] < v) {
+            order = false;
+        }
+        else {
+            order = true;
+        }
+
         if (front == 0) {
             front = capacity -1;
             array[front] = v;
@@ -199,11 +215,10 @@ void CDA<elmtype> :: AddFront(elmtype v) {
 template <class elmtype>
 void CDA <elmtype> :: DelEnd(){
     if(length == 0) {
-        cout << "The array is empty\n";
+        //cout << "The array is empty\n";
         front = 0;
         end = 0;
     }
-    
     else {
         if(end == 0) {
             end = capacity - 1;
@@ -281,7 +296,7 @@ int CDA <elmtype> :: Capacity() {
 }
 
 template <class elmtype>
-int CDA <elmtype> :: Clear(){
+void CDA <elmtype> :: Clear(){
     capacity = 1;
     length = 0;
     order = false;
@@ -324,7 +339,7 @@ int Selectpartition(elmtype *array, int start, int end) {
     if(start == end) {
         return start;
     }
-    int pivot = array[start];
+    int pivot = array[(start + end)/2];
 
     while(start < end){
         while(start < end && array[end] >= pivot) {
@@ -403,6 +418,16 @@ void quicksort(elmtype array[], int l, int r){
 
 template  <class elmtype>
 void CDA <elmtype> :: QuickSort() {
+    elmtype *temp = new elmtype[length];
+    for(int i=0;i<length;i++) {
+        temp[i] = array[(front+i)%capacity];
+    }
+    quicksort(temp,0,length-1);
+    for(int i=0;i<length;i++) {
+        array[(front+i)%capacity] = temp[i];
+    }
+    free(temp);
+    order = true;
 
 }
 
@@ -414,10 +439,17 @@ elmtype CDA <elmtype> :: Select(int k){
     else {
         elmtype *temp = new elmtype[length];
         for(int i=0;i<length;i++) {
-            temp[i] = array[(front+1)%capacity];
+            temp[i] = array[(front+i)%capacity];
         }
-        return quickSelect(temp,k,length);
+        int index = quickSelect(temp,k,length);
+        free(temp);
+        return index;
     }
+}
+
+template <class elmtype>
+void  insertionsort(){
+
 }
 
 template <class elmtype>
@@ -429,14 +461,52 @@ void CDA <elmtype> :: InsertionSort() {
             array[(front+j+1)%capacity] = temp;
         }
     }
+    order = true;
 }
 
 template <class elmtype>
 void CDA <elmtype> :: CountingSort(int m){
     
-
 }
+
+template <class elmtype>
+int binarySearch(elmtype *array, elmtype key, int length) {
+    int mid = 0;
+    int front = 0;
+    int back = length - 1;
+    while(front <= back) {
+        mid = (front + back)/2;
+        if(array[mid] == key) {
+            return mid;
+        }
+        else if (array[mid]< key) {
+            front = mid + 1;
+        }
+        else {
+            back = mid - 1;
+        }
+
+    }
+    return -1;
+}
+
 template <class elmtype> 
 int CDA <elmtype> :: Search (elmtype e){
-
+    if(order) {
+        elmtype *temp = new elmtype[length];
+        for(int i=0;i<length;i++) {
+            temp[i] = array[(front+i)%capacity];
+        }
+        int index = binarySearch(temp, e, length);
+        free(temp);
+        return index+1;
+    }
+    else {
+        for(int i;i<length;i++) {
+            if(array[(front+i)%capacity] == e) {
+                return i+1;
+            }
+        }
+        return -1;
+    }
 }
