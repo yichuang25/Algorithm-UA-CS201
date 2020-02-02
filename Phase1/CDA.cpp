@@ -335,84 +335,105 @@ int CDA <elmtype> :: SetOrdered() {
 }
 
 template <class elmtype>
-int Selectpartition(elmtype *array, int start, int end) {
-    if(start == end) {
-        return start;
-    }
-    int pivot = array[(start + end)/2];
-
-    while(start < end){
-        while(start < end && array[end] >= pivot) {
-            end--;
-        }
-        array[start] = array[end];
-
-        while(start < end && array[start] <= pivot) {
-            start++;
-        }
-        array[end] = array[start];
-    }
-
-    array[start] = pivot;
-    return start;
+elmtype partition(elmtype *arr, int l, int r) 
+{ 
+    elmtype x = arr[r];
+    int i = l; 
+    for (int j = l; j <= r - 1; j++) { 
+        if (arr[j] <= x) { 
+            swap(arr[i], arr[j]); 
+            i++; 
+        } 
+    } 
+    swap(arr[i], arr[r]); 
+    return i; 
 }
 
 
 template <class elmtype>
-elmtype quickSelect(elmtype *array, int k, int length) {
-    int i = 0;
-    int j = length - 1;
+elmtype kthSmallest(elmtype *arr, int l, int r, int k) 
+{ 
 
-    while(i <= j) {
-        int partitionIdx = Selectpartition(array,i,j);
-
-        if((k-1) == partitionIdx){
-            return array[partitionIdx];
-        }
-        else if((k-1)<partitionIdx){
-            j = partitionIdx - 1;
-        }
-        else {
-            i = partitionIdx + 1;
-        }
-    }
-
-    return 0;
-}
-
-template <class elmtype>
-int quickSortPartition(elmtype array[], int l, int r){
-    int i = l;
-    int j = r;
-    elmtype x = array[l];
-    while(i < j) {
-        while(i < j && array[j] >= x) {
-            j--;
-        }
-        if(i<j) {
-            array[i++] = array[j];
-        }   
-        while(i < j && array[i] <= x) {
-            i++;
-        }
-        if(i < j) {
-            array[j--] = array[i];
-        }
-    }
-    array[i] = x;
-    return i;
-}
+    if (k > 0 && k <= r - l + 1) { 
+        int index = partition(arr, l, r); 
+        if (index - l == k - 1) 
+            return arr[index]; 
+  
+        if (index - l > k - 1)  
+            return kthSmallest(arr, l, index - 1, k); 
+  
+        return kthSmallest(arr, index + 1, r,  
+                            k - index + l - 1); 
+    } 
+  
+    // If k is more than number of  
+    // elements in array 
+    return INT_MAX; 
+} 
 
 template <class elmtype>
-void quicksort(elmtype array[], int l, int r){
-    if(l>=r) {
+void  insertionsort(elmtype *array, int left, int right){
+    if(right <= left) {
         return;
     }
 
-    int i = quickSortPartition(array,l,r);
+    for(int i=left; i <= right; i++)
+    {
+        elmtype key = array[i];
+        int j = i - 1;
+        while(j >= 0 && key < array[j])
+        {
+            array[j + 1] = array[j];
+            j--;
+        }
+        array[j + 1] = key;
+    }
+}
 
-    quicksort(array,l,i-1);
-    quicksort(array,i+1,r);
+template <class elmtype>
+void quicksort(elmtype array[], int left, int right){
+    if(right <= left) {
+        return;
+    }
+    int l = left;
+    int r = right;
+    int median = (left+right)/2;
+
+    elmtype x = array[left];
+    elmtype y = array[median];
+    elmtype z = array[right];
+    elmtype pivot = (x+y+z) - (max(max(x,y),z)+min(min(x,y),z));
+
+    while(l < r) {
+        while(array[l] < pivot) {
+            l++;
+            if(l == r) {
+                break;
+            }
+        }
+
+        while(array[r] > pivot) {
+            r--;
+            if(r == l) {
+                break;
+            }
+        }
+
+        swap(array[l],array[r]);
+    }
+
+    if(((r-1) - left) >= 10) {
+        quicksort(array,left,r-1);
+    }
+    else {
+        insertionsort(array,left,r-1);
+    }
+    if((right-(l+1)) >= 10) {
+        quicksort(array,l+1,right);
+    }
+    else {
+        insertionsort(array,l+1,right);
+    }
 
 }
 
@@ -441,15 +462,10 @@ elmtype CDA <elmtype> :: Select(int k){
         for(int i=0;i<length;i++) {
             temp[i] = array[(front+i)%capacity];
         }
-        int index = quickSelect(temp,k,length);
+        elmtype index = kthSmallest(temp,0,length-1,k);
         free(temp);
         return index;
     }
-}
-
-template <class elmtype>
-void  insertionsort(){
-
 }
 
 template <class elmtype>
@@ -464,9 +480,49 @@ void CDA <elmtype> :: InsertionSort() {
     order = true;
 }
 
+template <class elmtype> 
+elmtype getMax(elmtype *array, int size) {
+   elmtype max = array[1];
+   for(int i = 2; i<=size; i++) {
+      if(array[i] > max)
+         max = array[i];
+   }
+   return max; //the max element from the array
+}
+
+template <class elmtype>
+void countSort(elmtype *array, int size){
+    int output[size+1];
+   elmtype max = getMax(array, size);
+   int count[max+1];     //create count array (max+1 number of elements)
+   for(int i = 0; i<=max; i++)
+      count[i] = 0;     //initialize count array to all zero
+   for(int i = 1; i <=size; i++)
+      count[array[i]]++;     //increase number count in count array.
+   for(int i = 1; i<=max; i++)
+      count[i] += count[i-1];     //find cumulative frequency
+   for(int i = size; i>=1; i--) {
+      output[count[array[i]]] = array[i];
+      count[array[i]] -= 1; //decrease count for same numbers
+   }
+   for(int i = 1; i<=size; i++) {
+      array[i] = output[i]; //store output array to main array
+   }
+}
+
 template <class elmtype>
 void CDA <elmtype> :: CountingSort(int m){
-    
+    elmtype *temp = new elmtype[length];
+    for(int i=0;i<length;i++) {
+        temp[i] = array[(front+i)%capacity];
+    }
+    countSort(array,m);
+    for(int i=0;i<length;i++) {
+        array[(front+i)%capacity] = temp[i];
+    }
+    free(temp);
+    order = true;
+
 }
 
 template <class elmtype>
@@ -502,9 +558,9 @@ int CDA <elmtype> :: Search (elmtype e){
         return index+1;
     }
     else {
-        for(int i;i<length;i++) {
+        for(int i=0;i<length;i++) {
             if(array[(front+i)%capacity] == e) {
-                return i+1;
+                return i;
             }
         }
         return -1;
