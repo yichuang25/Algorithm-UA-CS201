@@ -59,10 +59,10 @@ int main(){
 	// A => "0 1 2 3 4 5 6 7 8 9 10 -1"
 	cout << "Ordered is " << A.Ordered() << endl;
 	// A => "0 1 2 3 4 5 6 7 8 9 10 -1" Ordered => False
-	for (int i=0; i< A.Length();i++) cout << A[i] << " ";  cout << endl;
+	//for (int i=0; i< A.Length();i++) cout << A[i] << " ";  cout << endl;
 
 	A.QuickSort();
-	for (int i=0; i< A.Length();i++) cout << A[i] << " ";  cout << endl;
+	//for (int i=0; i< A.Length();i++) cout << A[i] << " ";  cout << endl;
 	
 	// A => "-1 0 1 2 3 4 5 6 7 8 9 10"
 	cout << "Ordered is " << A.Ordered() << endl;

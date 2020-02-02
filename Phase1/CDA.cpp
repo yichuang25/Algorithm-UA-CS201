@@ -71,7 +71,7 @@ CDA<elmtype> :: ~CDA() {
 //Copy constructor
 template <class elmtype>
 CDA<elmtype> :: CDA(const CDA &src){
-    cout << "In copy Constructor\n";
+    //cout << "In copy Constructor\n";
     capacity = src.capacity;
     end = src.end;
     front = src.front;
@@ -86,7 +86,7 @@ CDA<elmtype> :: CDA(const CDA &src){
 //Copy assignment operator
 template <class elmtype>
 CDA<elmtype>& CDA<elmtype> :: operator=(const CDA<elmtype> &src) {
-    cout << "In copy assignment operator\n";
+    //cout << "In copy assignment operator\n";
     if (this != &src) {
         capacity = src.capacity;
         end = src.end;
@@ -480,34 +480,36 @@ void CDA <elmtype> :: InsertionSort() {
     order = true;
 }
 
-template <class elmtype> 
-elmtype getMax(elmtype *array, int size) {
-   elmtype max = array[1];
-   for(int i = 2; i<=size; i++) {
-      if(array[i] > max)
-         max = array[i];
-   }
-   return max; //the max element from the array
-}
 
 template <class elmtype>
-void countSort(elmtype *array, int size){
-    int output[size+1];
-   elmtype max = getMax(array, size);
-   int count[max+1];     //create count array (max+1 number of elements)
-   for(int i = 0; i<=max; i++)
-      count[i] = 0;     //initialize count array to all zero
-   for(int i = 1; i <=size; i++)
-      count[array[i]]++;     //increase number count in count array.
-   for(int i = 1; i<=max; i++)
-      count[i] += count[i-1];     //find cumulative frequency
-   for(int i = size; i>=1; i--) {
-      output[count[array[i]]] = array[i];
-      count[array[i]] -= 1; //decrease count for same numbers
-   }
-   for(int i = 1; i<=size; i++) {
-      array[i] = output[i]; //store output array to main array
-   }
+void countSort(elmtype *array, int size, int length){
+    int count[size+1];
+    int position[size+1];
+    for(int i=0;i<=size;i++) {
+        count[i] = 0;
+        position[i] = 0;
+    }
+
+    for(int i=0;i<length;i++) {
+        count[array[i]]++;
+    }
+
+    for(int i=1;i<=size;i++) {
+        position[i] = count[i-1] + position[i-1];
+    }
+
+    elmtype *temp = new elmtype[length];
+    for(int i=0;i<length;i++) {
+        temp[position[array[i]]] = array[i];
+        position[array[i]]++;
+    }
+
+    for(int i=0;i<length;i++) {
+        array[i] = temp[i];
+    }
+    free(temp);
+
+
 }
 
 template <class elmtype>
@@ -516,7 +518,7 @@ void CDA <elmtype> :: CountingSort(int m){
     for(int i=0;i<length;i++) {
         temp[i] = array[(front+i)%capacity];
     }
-    countSort(array,m);
+    countSort(temp,m,length);
     for(int i=0;i<length;i++) {
         array[(front+i)%capacity] = temp[i];
     }
