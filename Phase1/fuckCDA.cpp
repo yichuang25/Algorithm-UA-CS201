@@ -54,8 +54,8 @@ int main() {
         if(i == 0) {
             B.AddEnd(9);
         }
-        else if(i>50 || i < 25){
-            B.AddEnd(1);
+        else if(i>40 || i < 25){
+            B.AddEnd(100);
         }
         else {
             B.AddEnd(i);

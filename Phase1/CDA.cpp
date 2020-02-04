@@ -1,7 +1,10 @@
+/*
+* Author: Yichen Huang
+* CWID: 11906882
+*
+*/
 #include <iostream>
 using namespace std;
-
-
 
 template <class elmtype>
 class CDA {
