@@ -2,6 +2,7 @@
 using namespace std;
 
 
+
 template <class elmtype>
 class CDA {
 
@@ -11,6 +12,7 @@ private:
     int capacity;
     int length;
     bool order;
+    elmtype ptr;
     elmtype *array;
 
 public:
@@ -59,7 +61,7 @@ CDA<elmtype> :: CDA(int s) {
 
 template <class elmtype>
 CDA<elmtype> :: ~CDA() {
-     delete array;
+     delete [] array;
      capacity = 0;
      front = 0;
      end = 0;
@@ -77,6 +79,7 @@ CDA<elmtype> :: CDA(const CDA &src){
     front = src.front;
     length = src.length;
     order = src.order;
+    ptr = src.ptr;
     array = new elmtype[capacity];
     for(int i=0;i<length;i++) {
         array[(front+i)%capacity] = src.array[(front+i)%capacity];
@@ -89,9 +92,11 @@ CDA<elmtype>& CDA<elmtype> :: operator=(const CDA<elmtype> &src) {
     //cout << "In copy assignment operator\n";
     if (this != &src) {
         capacity = src.capacity;
+        front = src.front;
         end = src.end;
         length = src.length;
         order = src.order;
+        ptr = src.ptr;
         array = new elmtype[capacity];
         for(int i=0;i<length;i++) {
             array[(front+i)%capacity] = src.array[(front+i)%capacity];
@@ -104,10 +109,10 @@ template <class elmtype>
 elmtype& CDA<elmtype> :: operator[](int i) {
     if(length == 0) {
         cout << "The array is empty.\n";
-        exit(0);
+        return ptr;
     }
     if(i>=length) {
-        exit(0);
+        return ptr;
     }
     return array[(front + i)%capacity];
 
@@ -120,6 +125,12 @@ void CDA<elmtype> :: Printarray() {
     cout << "Length: " << length << endl;
     cout << "Front: " << front << endl;
     cout << "End: " << end << endl;
+    if(order) {
+        cout << "Order: True.\n";
+    }
+    else {
+        cout << "Order: False.\n";
+    }
     cout << "Array\n";
     for (int i=0; i<length;i++){
             cout << array[(front + i)%capacity] << " ";
@@ -137,12 +148,12 @@ void CDA<elmtype> :: AddEnd(elmtype v) {
         for (int i=0; i<length;i++){
             temp[i] = array[(front + i)%length];
         }
-        delete array;
+        delete [] array;
         array = new elmtype[capacity];
         for(int i=0;i<length;i++){
             array[i] = temp[i];
         }
-        free(temp);
+        delete [] temp;
         front = 0;
         end = length-1;
     }
@@ -153,11 +164,13 @@ void CDA<elmtype> :: AddEnd(elmtype v) {
         order = true;
     }
     else {
-        if(array[end] > v){
-            order = false;
-        }
-        else {
-            order = true;
+        if(order) {
+            if(array[end] > v){
+                order = false;
+            }
+            else {
+                order = true;
+            }
         }
         array[(end + 1)%capacity] = v;
         end = (end+1)%capacity;
@@ -176,12 +189,12 @@ void CDA<elmtype> :: AddFront(elmtype v) {
         for (int i=0; i<length;i++){
             temp[i] = array[(front + i)%length];
         }
-        free (array);
+        delete [] array;
         array = new elmtype[capacity];
         for(int i=0;i<length;i++){
             array[i] = temp[i];
         }
-        free(temp);
+        delete [] temp;
         front = 0;
         end = length-1;
     }
@@ -192,11 +205,13 @@ void CDA<elmtype> :: AddFront(elmtype v) {
         order = true;
     }
     else {
-        if(array[front] < v) {
-            order = false;
-        }
-        else {
-            order = true;
+        if(order) {
+            if(array[front] < v) {
+                order = false;
+            }
+            else {
+                order = true;
+            }
         }
 
         if (front == 0) {
@@ -236,7 +251,7 @@ void CDA <elmtype> :: DelEnd(){
             for (int i=0; i<length;i++){
                 temp[i] = array[(front + i)%(2*capacity)];
             }
-            free(array);
+            delete [] array;
             array = new elmtype[capacity];
             for(int i=0;i<length;i++){
                 array[i] = temp[i];
@@ -270,7 +285,7 @@ void CDA <elmtype> :: DelFront() {
             for (int i=0; i<length;i++){
                 temp[i] = array[(front + i)%(2*capacity)];
             }
-            free(array);
+            delete [] array;
             array = new elmtype[capacity];
             for(int i=0;i<length;i++){
                 array[i] = temp[i];
@@ -302,7 +317,7 @@ void CDA <elmtype> :: Clear(){
     order = false;
     front = 0;
     end = 0;
-    free(array);
+    delete [] array;
     array = new elmtype[1];
 
 }
@@ -335,7 +350,7 @@ int CDA <elmtype> :: SetOrdered() {
 }
 
 template <class elmtype>
-elmtype partition(elmtype *arr, int l, int r) 
+int partition(elmtype *arr, int l, int r) 
 { 
     elmtype x = arr[r];
     int i = l; 
@@ -366,9 +381,7 @@ elmtype kthSmallest(elmtype *arr, int l, int r, int k)
                             k - index + l - 1); 
     } 
   
-    // If k is more than number of  
-    // elements in array 
-    return INT_MAX; 
+    return 0; 
 } 
 
 template <class elmtype>
@@ -391,14 +404,13 @@ void  insertionsort(elmtype *array, int left, int right){
 }
 
 template <class elmtype>
-void quicksort(elmtype array[], int left, int right){
+void quicksort(elmtype array[], int left, int right, bool &dul){
     if(right <= left) {
         return;
     }
     int l = left;
     int r = right;
     int median = (left+right)/2;
-
     elmtype x = array[left];
     elmtype y = array[median];
     elmtype z = array[right];
@@ -419,17 +431,27 @@ void quicksort(elmtype array[], int left, int right){
             }
         }
 
+        if(array[l] == pivot && array[r] == pivot) {
+            dul = true;  
+            l++;
+            
+        }
         swap(array[l],array[r]);
+        
+        
+        
+        
+
     }
 
     if(((r-1) - left) >= 10) {
-        quicksort(array,left,r-1);
+        quicksort(array,left,r-1,dul);
     }
     else {
         insertionsort(array,left,r-1);
     }
     if((right-(l+1)) >= 10) {
-        quicksort(array,l+1,right);
+        quicksort(array,l+1,right,dul);
     }
     else {
         insertionsort(array,l+1,right);
@@ -439,21 +461,30 @@ void quicksort(elmtype array[], int left, int right){
 
 template  <class elmtype>
 void CDA <elmtype> :: QuickSort() {
+    bool check = false;
     elmtype *temp = new elmtype[length];
     for(int i=0;i<length;i++) {
         temp[i] = array[(front+i)%capacity];
     }
-    quicksort(temp,0,length-1);
+    quicksort(temp,0,length-1,check);
+    if(check == true) {
+        insertionsort(temp,0,length-1);
+    }
+
     for(int i=0;i<length;i++) {
         array[(front+i)%capacity] = temp[i];
     }
-    free(temp);
-    order = true;
+    delete [] temp;
+    SetOrdered();
+    
 
 }
 
 template <class elmtype>
 elmtype CDA <elmtype> :: Select(int k){
+    if(k > length) {
+        return -1;
+    }
     if(order){
         return array[(front + k-1)%capacity];
     }
@@ -463,7 +494,7 @@ elmtype CDA <elmtype> :: Select(int k){
             temp[i] = array[(front+i)%capacity];
         }
         elmtype index = kthSmallest(temp,0,length-1,k);
-        free(temp);
+        delete [] temp;
         return index;
     }
 }
@@ -476,8 +507,9 @@ void CDA <elmtype> :: InsertionSort() {
             array[(front+j)%capacity] = array[(front+j+1)%capacity];
             array[(front+j+1)%capacity] = temp;
         }
+        //cout << i << "/" << length << endl;
     }
-    order = true;
+    SetOrdered();
 }
 
 
@@ -507,8 +539,7 @@ void countSort(elmtype *array, int size, int length){
     for(int i=0;i<length;i++) {
         array[i] = temp[i];
     }
-    free(temp);
-
+    delete [] temp;
 
 }
 
@@ -522,7 +553,7 @@ void CDA <elmtype> :: CountingSort(int m){
     for(int i=0;i<length;i++) {
         array[(front+i)%capacity] = temp[i];
     }
-    free(temp);
+    delete [] temp;
     order = true;
 
 }
@@ -556,8 +587,8 @@ int CDA <elmtype> :: Search (elmtype e){
             temp[i] = array[(front+i)%capacity];
         }
         int index = binarySearch(temp, e, length);
-        free(temp);
-        return index+1;
+        delete [] temp;
+        return index;
     }
     else {
         for(int i=0;i<length;i++) {

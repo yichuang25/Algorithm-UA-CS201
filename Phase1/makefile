@@ -1,2 +1,2 @@
-all:
-	g++ phase1main.cpp CDA.cpp -o phase1
+all: 
+	g++ phase1main.cpp  -o phase1

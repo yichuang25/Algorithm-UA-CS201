@@ -3,10 +3,14 @@ using namespace std;
 #include "CDA.cpp"
 
 void foo(CDA<int> x) {
-	for (int i=0; i<x.Length()/2; i++)
+	for (int i=0; i<x.Length()/2; i++){
+		int temp = x[i];
 		x[i] = x[x.Length()/2+i];
-		cout << "SetOrdered in foo is " << x.SetOrdered() << endl;
-		// x => "5 6 7 8 9 1 1 2 3 4 10" SetOrdered => -1	
+		x[x.Length()/2+i] = temp;
+	}
+	for (int i=0; i< x.Length();i++) cout << x[i] << " ";  cout << endl;
+	cout << "SetOrdered in foo is " << x.SetOrdered() << endl;
+	// x => "5 6 7 8 9 1 1 2 3 4 10" SetOrdered => -1	
 }
 
 int main(){
@@ -39,7 +43,7 @@ int main(){
 	cout << "Select is " << A.Select(3) << endl;
 	// A => "0 1 2 3 4 5 6 7 8 9" Select => 2
 	cout << "Search is " << A.Search(5) << endl;
-	// A => "0 1 2 3 4 5 6 7 8 9" Search => 6
+	// A => "0 1 2 3 4 5 6 7 8 9" Search => 5
 	A.AddFront(10); 
 	// A => "10 0 1 2 3 4 5 6 7 8 9"
 	cout << "SetOrdered is " << A.SetOrdered() << endl;
