@@ -17,65 +17,147 @@ void counttime(time_t start, time_t end) {
 int main() {
     time_t start, end;
     srand(time(NULL));
+
+    cout << "***********************Select***********************\n";
+    start = clock();
     CDA<int> A;
+    for(int i=0;i<100;i++){
+        if(i%2 == 0){
+            A.AddFront(i);
+        }
+        else {
+            A.AddEnd(i);
+        }
+    }
+    for (int i=0; i< 100;i++) cout << A[i] << " ";  cout << endl;
+    cout << "Select 2 is: " << A.Select(2) << endl;
+    A.QuickSort();
+    for (int i=0; i< 100;i++) cout << A[i] << " ";  cout << endl;
+    cout << "Select 3 is: " << A.Select(3) << endl;
+    cout << "Select 0 is: " << A.Select(-1) << endl;
+    end = clock();
+    counttime(start,end);
+    cout << "********************InsertionSort*******************\n";
+    CDA<int> B;
+    srand(time(NULL));
+    start = clock();
+    for(int i=0;i<1000;i++) {
+        if(rand()%2 == 0){
+            B.AddFront(rand());
+        }
+        else {
+            B.AddEnd(rand());
+        }
+    }
+    for (int i=0; i< 50;i++) cout << B[i] << " ";  cout << endl;
+    cout << endl;
+    B.InsertionSort();
+    for (int i=0; i< 50;i++) cout << B[i] << " ";  cout << endl;
+    end = clock();
+    counttime(start,end);
+
+    cout << "********************QuickSort***********************\n";
+    CDA<int> C;
+    srand(time(NULL));
+    start = clock();
     for(int i=0;i<10000;i++) {
         if(rand()%2 == 0){
-            A.AddFront(rand());
+            C.AddFront(rand());
         }
         else {
-            A.AddEnd(rand());
+            C.AddEnd(rand());
         }
     }
-    for (int i=0; i< 100;i++) cout << A[i] << " ";  cout << endl;
+    for (int i=0; i< 50;i++) cout << C[i] << " ";  cout << endl;
     cout << endl;
-    
-    A.AddEnd(1);
-    start = clock();
-    cout << "The position is: " << A.Search(1) << endl;
-    end = clock(); 
+    C.InsertionSort();
+    for (int i=0; i< 50;i++) cout << C[i] << " ";  cout << endl;
+    end = clock();
     counttime(start,end);
-    
-    start = clock();
-    A.InsertionSort();
-    end = clock(); 
-    counttime(start,end);
-   
 
+    cout << "***************QuickSort_Special********************\n";
+    CDA<int> D;
     start = clock();
-    cout << "The position is: " << A.Search(1) << endl;
-    end = clock(); 
-    counttime(start,end);
-    
-    
-    for (int i=0; i< 100;i++) cout << A[i] << " ";  cout << endl;
-
-    CDA<int> B;
     for(int i=0;i<100;i++) {
         if(i == 0) {
-            B.AddEnd(9);
+            D.AddEnd(9);
         }
-        else if(i>40 || i < 25){
-            B.AddEnd(100);
+        else if(i>50 || i < 30){
+            D.AddEnd(100);
         }
         else {
-            B.AddEnd(i);
+            D.AddEnd(i);
+        }
+    }
+    for (int i=0; i< 100;i++) cout << D[i] << " ";  cout << endl << endl;
+    D.InsertionSort();
+    for (int i=0; i< 100;i++) cout << D[i] << " ";  cout << endl;
+    end = clock();
+    counttime(start,end);
+    D.Clear();
+    cout << endl;
+    start = clock();
+    for(int i=0;i<100;i++) {
+        if(i == 0) {
+            D.AddEnd(9);
+        }
+        else if(i>50 || i < 30){
+            D.AddEnd(1);
+        }
+        else {
+            D.AddEnd(i);
+        }
+    }
+    for (int i=0; i< 100;i++) cout << D[i] << " ";  cout << endl << endl;
+    D.InsertionSort();
+    for (int i=0; i< 100;i++) cout << D[i] << " ";  cout << endl;
+    end = clock();
+    counttime(start,end);
+    cout << "******************CountingSort**********************\n";
+    CDA<int> E;
+    start = clock();
+    for(int i=0;i<100;i++) {
+        if(i%2 == 0){
+            E.AddFront(i%11);
+        }
+        else {
+            E.AddEnd(i%11);
+        }
+    }
+    for (int i=0; i< 100;i++) cout << E[i] << " ";  cout << endl << endl;
+    E.CountingSort(10);
+    for (int i=0; i< 100;i++) cout << E[i] << " ";  cout << endl;
+    end = clock();
+    counttime(start,end);
+    cout << "*******************Search***************************\n";
+    CDA<int> F;
+    srand(time(NULL));
+    start = clock();
+    for(int i=0;i<10000;i++) {
+        if(rand()%2 == 0){
+            F.AddFront(rand());
+        }
+        else {
+            F.AddEnd(rand());
         }
     }
 
-    start = clock();
-    B.Printarray();
-
-    B.QuickSort();
-    B.Printarray();
-    
-    end = clock(); 
-    counttime(start,end);
-    cout << "The position is: " << B.Search(2) << endl;
-    
+    F.AddEnd(0);
+    F.AddFront(1);
+    cout <<"Search 0 is: " << F.Search(0) << endl;
+    F.QuickSort();
+    for (int i=0; i< 20;i++) cout << F[i] << " ";  cout << endl;
+    cout <<"Search 1 is: " << F.Search(1) << endl;
+    cout <<"Search 3 is: " << F.Search(3) << endl;
 
 
 
-
-
+    cout << "****************************************************\n";
+    A.Clear();
+    B.Clear();
+    C.Clear();
+    D.Clear();
+    E.Clear();
+    F.Clear();
 
 }

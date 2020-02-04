@@ -485,7 +485,8 @@ void CDA <elmtype> :: QuickSort() {
 
 template <class elmtype>
 elmtype CDA <elmtype> :: Select(int k){
-    if(k > length) {
+    if(k > length || k < 1) {
+        cout << "Out of bound\n";
         return 0;
     }
     if(order){
