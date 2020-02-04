@@ -483,7 +483,7 @@ void CDA <elmtype> :: QuickSort() {
 template <class elmtype>
 elmtype CDA <elmtype> :: Select(int k){
     if(k > length) {
-        return -1;
+        return 0;
     }
     if(order){
         return array[(front + k-1)%capacity];

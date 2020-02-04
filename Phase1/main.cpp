@@ -112,6 +112,7 @@ int main(){
 	D.AddEnd("Lamp");
 	D.AddFront("Billy Club");
 	D.AddEnd("Computer Science");
+	
 	cout << "D = ";
 	for (int i=0; i< D.Length();i++) cout << D[i] << " ";  cout << endl;
 	//D = Billy Club Zebra Hello Apple Lamp Computer Science

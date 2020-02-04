@@ -51,18 +51,21 @@ int main() {
 
     CDA<int> B;
     for(int i=0;i<100;i++) {
-        if(i%2 == 1) {
+        if(i == 0) {
+            B.AddEnd(9);
+        }
+        else if(i>50 || i < 25){
             B.AddEnd(1);
         }
-        else{
-            B.AddEnd(0);
+        else {
+            B.AddEnd(i);
         }
     }
 
     start = clock();
     B.Printarray();
 
-    B.CountingSort(1);
+    B.QuickSort();
     B.Printarray();
     
     end = clock(); 
