@@ -1,9 +1,10 @@
 /*
 * Author: Yichen Huang
-* CWID: 11906882
+* 
 *
 */
 #include <iostream>
+//#include <future>
 using namespace std;
 
 template <class elmtype>
@@ -447,6 +448,14 @@ void quicksort(elmtype array[], int left, int right, bool &dul){
 
     }
 
+    //if((r-l) > 1000) {
+    //    auto left = async(launch::async, [&](){
+    //        return quicksort(array,left,r-1,dul);
+    //    });
+    //    quicksort(array,l+1,right,dul);
+    //}
+    //else {
+
     if(((r-1) - left) >= 10) {
         quicksort(array,left,r-1,dul);
     }
@@ -459,7 +468,7 @@ void quicksort(elmtype array[], int left, int right, bool &dul){
     else {
         insertionsort(array,l+1,right);
     }
-
+    //}
 }
 
 template  <class elmtype>
@@ -562,23 +571,48 @@ void CDA <elmtype> :: CountingSort(int m){
 
 }
 
+//template <class elmtype>
+//int binarySearch(elmtype *array, elmtype key, int length) {
+//    int mid = 0;
+//    int front = 0;
+//    int back = length - 1;
+//    while(front <= back) {
+//        mid = (front + back)/2;
+//        if(array[mid] == key) {
+//            return mid;
+//        }
+//        else if (array[mid]< key) {
+//            front = mid + 1;
+//        }
+//        else {
+//            back = mid - 1;
+//        }
+//
+//    }
+//    return -1;
+//}
+
 template <class elmtype>
-int binarySearch(elmtype *array, elmtype key, int length) {
+int binarySearch(elmtype *array, elmtype key, int length, int front, int end, int capasity) {
+    int l = front;
+    int r = end;
+    int size = length;
     int mid = 0;
-    int front = 0;
-    int back = length - 1;
-    while(front <= back) {
-        mid = (front + back)/2;
+    while(length>0) {
+        mid =(l + length/2)%capasity;
+        //cout << mid << " = " << array[mid] <<endl;
         if(array[mid] == key) {
             return mid;
         }
-        else if (array[mid]< key) {
-            front = mid + 1;
+        else if(array[mid]<key) {
+            l = (mid + 1)%capasity;
+            length = length/2;
         }
         else {
-            back = mid - 1;
-        }
+            r = (mid - 1)%capasity;
+            length = length/2;
 
+        }
     }
     return -1;
 }
@@ -586,13 +620,18 @@ int binarySearch(elmtype *array, elmtype key, int length) {
 template <class elmtype> 
 int CDA <elmtype> :: Search (elmtype e){
     if(order) {
-        elmtype *temp = new elmtype[length];
-        for(int i=0;i<length;i++) {
-            temp[i] = array[(front+i)%capacity];
+        //elmtype *temp = new elmtype[length];
+        //for(int i=0;i<length;i++) {
+        //    temp[i] = array[(front+i)%capacity];
+        //}
+        int index = binarySearch(array, e, length-1, front, end, capacity);
+        if(index == -1) {
+            return index;
         }
-        int index = binarySearch(temp, e, length);
-        delete [] temp;
-        return index;
+        else {
+            return (capacity + (index-front)%capacity) % capacity;
+        }
+        
     }
     else {
         for(int i=0;i<length;i++) {

@@ -31,17 +31,18 @@ int main() {
     }
     for (int i=0; i< 100;i++) cout << A[i] << " ";  cout << endl;
     cout << "Select 2 is: " << A.Select(2) << endl;
+    cout << "Select 0 is: " << A.Select(-1) << endl;
     A.QuickSort();
     for (int i=0; i< 100;i++) cout << A[i] << " ";  cout << endl;
     cout << "Select 3 is: " << A.Select(3) << endl;
-    cout << "Select 0 is: " << A.Select(-1) << endl;
+    cout << "Select -1 is: " << A.Select(-1) << endl;
     end = clock();
     counttime(start,end);
     cout << "********************InsertionSort*******************\n";
     CDA<int> B;
     srand(time(NULL));
     start = clock();
-    for(int i=0;i<1000;i++) {
+    for(int i=0;i<10000;i++) {
         if(rand()%2 == 0){
             B.AddFront(rand());
         }
@@ -60,7 +61,7 @@ int main() {
     CDA<int> C;
     srand(time(NULL));
     start = clock();
-    for(int i=0;i<10000;i++) {
+    for(int i=0;i<10000000;i++) {
         if(rand()%2 == 0){
             C.AddFront(rand());
         }
@@ -70,7 +71,7 @@ int main() {
     }
     for (int i=0; i< 50;i++) cout << C[i] << " ";  cout << endl;
     cout << endl;
-    C.InsertionSort();
+    C.QuickSort();
     for (int i=0; i< 50;i++) cout << C[i] << " ";  cout << endl;
     end = clock();
     counttime(start,end);
@@ -147,9 +148,11 @@ int main() {
     cout <<"Search 0 is: " << F.Search(0) << endl;
     F.QuickSort();
     for (int i=0; i< 20;i++) cout << F[i] << " ";  cout << endl;
+    cout <<"Search 0 is: " << F.Search(0) << endl;
     cout <<"Search 1 is: " << F.Search(1) << endl;
     cout <<"Search 3 is: " << F.Search(3) << endl;
-
+    end = clock();
+    counttime(start,end);
 
 
     cout << "****************************************************\n";
