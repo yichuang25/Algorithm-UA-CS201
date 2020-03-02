@@ -9,6 +9,7 @@ int main(){
 	RBTree<string,int> T1, T2(K,V,10);
 	
 	for(int i=0; i<10; i++) T1.insert(K[i],V[i]);
+	
 	// T1 and T2 should be identical trees
 	
 	cout << *(T2.search("C")) << endl;
