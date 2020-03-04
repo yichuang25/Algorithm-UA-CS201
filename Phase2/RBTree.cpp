@@ -18,13 +18,17 @@ private:
     Node<keytype, valuetype> *root;
 
 
-public:
+protected:
     void rotateleft(Node<keytype, valuetype> *&src);
     void rotateright(Node<keytype, valuetype> *& src);
     void preorderBST(Node<keytype, valuetype> *& src);
     void inorderBST(Node<keytype, valuetype> *& src);
     void postorderBST(Node<keytype, valuetype> *& src);
     void deleteNode(Node<keytype, valuetype> *src);
+    Node<keytype,valuetype> *minimum(Node<keytype,valuetype> *src);
+    Node<keytype,valuetype> *maximum(Node<keytype,valuetype> *src);
+    Node<keytype,valuetype> *findNode(keytype key);
+public:
     RBTree();
     RBTree(keytype k[], valuetype V[], int s);
     ~RBTree();
@@ -293,7 +297,7 @@ void RBTree<keytype, valuetype> :: insert(keytype k, valuetype v) {
 
 template <class keytype, class valuetype>
 int RBTree<keytype, valuetype> :: remove(keytype k) {
-
+    
 }
 
 template <class keytype, class valuetype>
@@ -307,13 +311,82 @@ keytype RBTree<keytype, valuetype> :: select(int pos) {
 }
 
 template <class keytype, class valuetype>
-keytype* RBTree<keytype, valuetype> :: successor(keytype k) {
+Node<keytype,valuetype>* RBTree<keytype,valuetype> ::minimum(Node<keytype,valuetype> *src) {
+    if(src == NULL) {
+        return src;
+    }
+    while(src->left != NULL) {
+        src = src->left;
+    }
+    return src;
+}
 
+template <class keytype, class valuetype>
+Node<keytype,valuetype>* RBTree<keytype,valuetype> ::maximum(Node<keytype,valuetype> *src) {
+    if(src == NULL) {
+        return src;
+    }
+    while(src->right != NULL) {
+        src = src->right;
+    }
+    return src;
+}
+
+template <class keytype, class valuetype>
+Node<keytype,valuetype>* RBTree<keytype,valuetype> ::findNode(keytype key) {
+    Node<keytype,valuetype> *ptr = root;
+    while(ptr != NULL) {
+        if(ptr->key == key) {
+            return ptr;
+        }
+        else if(key > ptr->key) {
+            ptr = ptr->right;
+        }
+        else {
+            ptr = ptr->left;
+        }
+    }
+    return NULL;
+}
+
+template <class keytype, class valuetype>
+keytype* RBTree<keytype, valuetype> :: successor(keytype k) {
+    //find node
+    Node<keytype,valuetype> *ptr = findNode(k);
+    if(ptr == NULL) {
+        return NULL;
+    }
+    
+    if(ptr->right != NULL) {
+        return minimum(ptr->right);
+    }
+
+    Node<keytype,valuetype> *parent = ptr->parent;
+    while((parent!=NULL) && (ptr == parent->right)) {
+        ptr = parent;
+        parent = parent->parent;
+    }
+    return parent;
+    
 }
 
 template <class keytype, class valuetype>
 keytype* RBTree<keytype, valuetype> :: predecessor(keytype k) {
+    //find node
+    Node<keytype,valuetype> *ptr = findNode(k);
+    if(ptr == NULL) {
+        return NULL;
+    }
 
+    if(ptr->left != NULL) {
+        return maximum(ptr->left);
+    }
+
+    Node<keytype,valuetype> *parent = ptr->parent;
+    while((parent!=NULL) && (ptr == parent->left)) {
+        ptr = parent;
+        parent = parent->parent;
+    }
 }
 
 template <class keytype, class valuetype>
