@@ -15,10 +15,10 @@ int main(){
 	cout << *(T2.search("C")) << endl;
 	// Should output 8
 	
-	//cout << T1.rank("C") << endl;
+	cout << T1.rank("C") << endl;
 	//Should output 3
 	
-	//cout << T1.select(3) << endl;
+	cout << T1.select(3) << endl;
 	//Should output C 
 	
 	T2.preorder();
@@ -47,16 +47,18 @@ int main(){
 	
 	cout <<*(T1.predecessor("C"))<<endl;
 	//Should output B		
-
+*/
 	
     RBTree<int,int> X;
 	for (int i=1;i<100000;i++) X.insert(i,i);
+	//cout << X.size() << endl;
 	for (int i=1;i<100000;i++) {
+		cout << i << endl;
 		if(X.rank(i) != i) cout << "Rank error" << endl;
 		if(X.select(i) != i) cout << "Select error" << endl;
 		if(*(X.search(i)) != i) cout << "Search error" << endl;
 	}  
-	*/
+	
 	//Should be no output and should take seconds, not minutes
 	return 0;
 }

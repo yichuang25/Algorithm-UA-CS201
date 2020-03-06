@@ -9,6 +9,7 @@ struct Node
     keytype key;
     valuetype value;
     Color color;
+    int numNode;
     Node<keytype,valuetype> *left,*right,*parent;
 };
 template <class keytype, class valuetype>
@@ -25,6 +26,9 @@ protected:
     void inorderBST(Node<keytype, valuetype> *& src);
     void postorderBST(Node<keytype, valuetype> *& src);
     void deleteNode(Node<keytype, valuetype> *src);
+    void removeFixup(Node<keytype, valuetype> *src);
+    int countNode(Node<keytype,valuetype> *src);
+    void countTree(Node<keytype,valuetype> *src);
     Node<keytype,valuetype> *minimum(Node<keytype,valuetype> *src);
     Node<keytype,valuetype> *maximum(Node<keytype,valuetype> *src);
     Node<keytype,valuetype> *findNode(keytype key);
@@ -191,6 +195,15 @@ valuetype* RBTree<keytype, valuetype> :: search(keytype k) {
 }
 
 template <class keytype, class valuetype>
+void RBTree<keytype, valuetype> :: countTree(Node<keytype,valuetype> *src) {
+    if(src!=NULL) {
+        src->numNode = countNode(src);
+        countTree(src->left);
+        countTree(src->right);
+    }
+}
+
+template <class keytype, class valuetype>
 void RBTree<keytype, valuetype> :: insert(keytype k, valuetype v) {
     if(root == NULL) {
         root = new Node<keytype, valuetype>();
@@ -199,6 +212,7 @@ void RBTree<keytype, valuetype> :: insert(keytype k, valuetype v) {
         root->left = NULL;
         root->right = NULL;
         root->parent = NULL;
+        root->numNode = 0;
         root->color = BLACK;
         length++;
         return;
@@ -210,21 +224,21 @@ void RBTree<keytype, valuetype> :: insert(keytype k, valuetype v) {
         if(cur->key > k) {
             parent = cur;
             cur = cur->left;
-            length++;
         }
         else if (cur->key < k){
             parent = cur;
             cur = cur->right;
-            length++;
         }
         else {
             return;
         }
     }
+    length++;
     Node<keytype, valuetype> *ptr = new Node<keytype, valuetype>();
     ptr->key = k;
     ptr->value = v;
     ptr->color = RED;
+    ptr->numNode = 0;
     ptr->left = NULL;
     ptr->right = NULL;
     ptr->parent = NULL;
@@ -295,18 +309,64 @@ void RBTree<keytype, valuetype> :: insert(keytype k, valuetype v) {
 
 }
 
+template <class keytype,class valuetype>
+void RBTree<keytype, valuetype> :: removeFixup (Node<keytype,valuetype> *src) {
+
+}
+
 template <class keytype, class valuetype>
 int RBTree<keytype, valuetype> :: remove(keytype k) {
     
 }
 
+template <class keytype,class valuetype>
+int RBTree<keytype,valuetype> :: countNode(Node<keytype, valuetype> *src) {
+    if(src == NULL) {
+        return 0;
+    }
+    return countNode(src->left) + countNode(src->right) + 1;
+}
+
 template <class keytype, class valuetype>
 int RBTree<keytype, valuetype> :: rank(keytype k) {
-
+    int rank = 0;
+    Node<keytype, valuetype> *ptr = root;
+    while(ptr) {
+        //cout << ptr->key << endl;
+        if(k < ptr->key) {
+            ptr = ptr->left;
+        }
+        else if (k > ptr->key) {
+            rank = rank + 1 + countNode(ptr->left);
+            ptr = ptr->right;
+        }
+        else {
+            return rank + 1 + countNode(ptr->left);
+        }
+    }
+    return 0;
 }
 
 template <class keytype, class valuetype>
 keytype RBTree<keytype, valuetype> :: select(int pos) {
+    Node<keytype, valuetype> *ptr = root;
+    int count = countNode(ptr->left);
+    if(count + 1 == pos) {
+        return ptr->key;
+    }
+    while(count + 1 != pos) {
+        if(pos <= count) {
+            ptr = ptr->left;
+            count = countNode(ptr->left);
+        }
+        else {
+            pos = pos - 1 - count;
+            ptr = ptr->right;
+            count = countNode(ptr->left);
+        }
+    }
+    return ptr->key;
+
 
 }
 
