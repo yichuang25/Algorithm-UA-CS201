@@ -1,9 +1,21 @@
 #include <iostream>
+#include <ctime>
 using namespace std;
 #include "RBTree.cpp"
+#include <stdlib.h>
+#include <iomanip>
+
+void counttime(time_t start, time_t end) {
+    double time_taken = double(end - start) / double(CLOCKS_PER_SEC); 
+    cout << "Time taken by program is : " << fixed  
+         << time_taken << setprecision(5); 
+    cout << " sec " << endl;
+}
 
 int main(){
-	string K[10] = {"A","B","C","D","E","F","G","J","I","K"};
+	time_t start, end;
+	start = clock();
+	string K[10] = {"A","B","C","D","E","F","G","H","I","K"};
 	int V[10] = {10,9,8,7,6,5,4,3,2,1};
 	
 	RBTree<string,int> T1, T2(K,V,10);
@@ -25,8 +37,13 @@ int main(){
 	//Should output D B A C F E H G I K
 	
 	T2.inorder();
+
+	//RBTree<string, int> T3;
+	//T3 = T2;
+	//T3.preorder();
+	//T3.inorder();
 	//Should output	A B C D E F G H I K
-	/*
+	
 	cout << T2.remove("D") << endl;
 	//Should output 1
 	
@@ -36,7 +53,7 @@ int main(){
 	T2.inorder();
 	//Should output	A B C E F G H I K
 	
-	cout << T2.remove("J") << endl;
+	cout << T2.remove("j") << endl;
 	//Should output 0
 	
 	cout <<T2.rank("G") << endl;
@@ -47,18 +64,22 @@ int main(){
 	
 	cout <<*(T1.predecessor("C"))<<endl;
 	//Should output B		
-*/
+
 	
     RBTree<int,int> X;
-	for (int i=1;i<100000;i++) X.insert(i,i);
+	for (int i=1;i<100000;i++) {
+		//cout << i << endl;
+		X.insert(i,i);
+	}
 	//cout << X.size() << endl;
 	for (int i=1;i<100000;i++) {
-		cout << i << endl;
+		//cout << i << endl;
 		if(X.rank(i) != i) cout << "Rank error" << endl;
 		if(X.select(i) != i) cout << "Select error" << endl;
 		if(*(X.search(i)) != i) cout << "Search error" << endl;
-	}  
-	
+	}
+	end = clock();
+	counttime(start,end);
 	//Should be no output and should take seconds, not minutes
 	return 0;
 }
