@@ -1,3 +1,9 @@
+/*
+*
+*   Author: Yichen Huang
+*   CWID: 11906882
+*
+*/
 #include <iostream>
 
 using namespace std;
@@ -182,8 +188,6 @@ RBTree<keytype, valuetype> :: ~RBTree() {
 
 template <class keytype, class valuetype>
 void RBTree<keytype,valuetype> :: copyNode(Node<keytype,valuetype> *a,Node<keytype,valuetype> *b) {
-
-    
     if(a->left != NULL) {
         Node<keytype,valuetype> *left = new Node<keytype,valuetype>; 
         //cout << "1\n";
