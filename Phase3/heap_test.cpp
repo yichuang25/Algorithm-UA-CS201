@@ -4,6 +4,16 @@ using namespace std;
 
 int main() {
     Heap<int,int> A;
-    A.insert(1,1);
-    
+    for(int i=1;i<=10;i++) {
+        A.insert(i,i);
+    }
+    A.printArray();
+    cout << A.extractMin() << endl;
+    A.printArray();
+    cout << A.extractMin() << endl;
+    A.printArray();
+    cout << A.extractMin() << endl;
+    A.printArray();
+    //A.printKey();
+    return 0;
 }
