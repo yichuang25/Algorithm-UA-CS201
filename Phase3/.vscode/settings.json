@@ -2,6 +2,7 @@
     "files.associations": {
         "type_traits": "cpp",
         "random": "cpp",
-        "ratio": "cpp"
+        "ratio": "cpp",
+        "iosfwd": "cpp"
     }
 }

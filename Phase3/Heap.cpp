@@ -141,6 +141,7 @@ Heap<keytype, valuetype>& Heap<keytype,valuetype> :: operator=(const Heap &src) 
             head[i].value = src.head[i].value;
         }
     }
+    return *this;
 }
 
 template <class keytype, class valuetype>

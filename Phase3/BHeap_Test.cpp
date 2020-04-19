@@ -339,7 +339,7 @@ int main()
 
     for (int i = 0; i < arraySize * 2; i++)
     {
-        // y.printKey(); uncomment if you want, if your print key worked above it should be ok here
+        // y.printKey(); //uncomment if you want, if your print key worked above it should be ok here
         cout << y.peekKey() << endl;
         cout << y.peekValue() << endl;
         cout << y.extractMin() << endl;
