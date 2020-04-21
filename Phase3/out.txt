@@ -1,18 +1,24 @@
+1 2 4 3 6 5 8 10 7 9 
+1 2 5 4 3 9 6 10 7 8 
+K
+1
+2 3 5 4 8 9 6 10 7 
 B1:
 J K 
 B3:
 A E H I F C D B 
-B1:
-J K 
-B3:
-A E H I F C D B 
+A
 B0:
-L 
-B2:
-G M O N 
-B1:
-B L 
-B2:
-G M O N 
+B 
 B3:
 C E H I F J K D 
+B2:
+G L N O 
+B3:
+M 
+B0:
+B 
+B2:
+G L N O 
+B4:
+C M E H I F J K D 
