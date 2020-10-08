@@ -381,7 +381,8 @@ elmtype kthSmallest(elmtype *arr, int l, int r, int k)
         if (index - l > k - 1)  
             return kthSmallest(arr, l, index - 1, k); 
   
-        return kthSmallest(arr, index + 1, r,  k - index + l - 1); 
+        return kthSmallest(arr, index + 1, r,  
+                            k - index + l - 1); 
     } 
   
     return 0; 

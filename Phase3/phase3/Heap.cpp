@@ -260,8 +260,10 @@ void Heap<keytype, valuetype> :: insert(keytype k, valuetype v) {
         int num = length;
         while(num>0) {
             int parent = num/2;
+            if(parent == 0) {
+                break;
+            }
             if(head[parent].key > head[num].key) {
-
                 Node<keytype,valuetype> temp;
                 temp.value = head[parent].value;
                 temp.key = head[parent].key;

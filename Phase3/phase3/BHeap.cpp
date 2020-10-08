@@ -83,6 +83,7 @@ Element<keytype,valuetype>* BHeap<keytype, valuetype> :: copyNode(Element<keytyp
     }
     dest = new Element<keytype,valuetype>;
     dest->value = src->value;
+    dest->degree = src->degree;
     dest->key = src->key;
     dest->parent = parent;
     dest->child = copyNode(src->child,dest->child,dest);
@@ -301,10 +302,10 @@ template <class keytype, class valuetype>
 void BHeap<keytype, valuetype> :: printKey() {
     Element<keytype,valuetype> *ptr = mroot;
     while(ptr!=NULL) {
-        cout << "B" << ptr->degree << ":" << endl;
+        cout << "B" << ptr->degree << endl;
         cout << ptr->key << " ";
         printElement(ptr->child);
-        cout << endl;
+        cout << endl << endl;
         ptr = ptr->next;
     }
 

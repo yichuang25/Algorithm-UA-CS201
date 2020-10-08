@@ -38,7 +38,7 @@ int main()
 
     Heap<int, int> x(buildHeapKeys, buildHeapValues, 31);
 
-    //x = x;
+    x = x;
 
     cout << "INSIDE FUNCTION" << endl;
     func(x); // should print first line of below printKey
@@ -187,7 +187,7 @@ int main()
 
     Heap<char, char> chX(buildHeapCharKeys, buildHeapCharValues, 26);
 
-    //chX = chX;
+    chX = chX;
 
     cout << "INSIDE FUNCTION" << endl;
     func(chX); // should print first line of below printKey
@@ -330,7 +330,7 @@ int main()
 
     Heap<string, string> strX(buildHeapStringKeys, buildHeapStringValues, 26);
 
-    //strX = strX;
+    strX = strX;
 
     cout << "INSIDE FUNCTION" << endl;
     func(strX); // should print first line of below printKey

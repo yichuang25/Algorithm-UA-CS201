@@ -3,6 +3,7 @@
         "type_traits": "cpp",
         "random": "cpp",
         "ratio": "cpp",
-        "iosfwd": "cpp"
+        "iosfwd": "cpp",
+        "ostream": "cpp"
     }
 }
